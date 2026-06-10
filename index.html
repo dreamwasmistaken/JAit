@@ -1,408 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Luxury Glassmorphism Website</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Future UI</title>
 
 <style>
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
 }
 
 body{
-    min-height:100vh;
-    background:
-    radial-gradient(circle at top left,#9fc2cf 0%,transparent 25%),
-    linear-gradient(135deg,#0d4555,#246f82,#4f9ab0);
-    overflow-x:hidden;
-    color:white;
+overflow:hidden;
+height:100vh;
+background:#050b14;
+color:white;
 }
 
-/* Background Blur Orbs */
+/* Animated Background */
 
-.blur{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(120px);
-    z-index:-1;
+.bg{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,#00e5ff40,transparent 30%),
+radial-gradient(circle at 80% 30%,#7c3aed50,transparent 35%),
+radial-gradient(circle at 50% 80%,#06b6d450,transparent 35%),
+linear-gradient(135deg,#020617,#071c2b,#0b3b4e);
+background-size:200% 200%;
+animation:bgMove 15s infinite alternate ease-in-out;
 }
 
-.blur1{
-    width:350px;
-    height:350px;
-    background:#89d4ff;
-    top:-100px;
-    left:-100px;
+@keyframes bgMove{
+0%{background-position:0% 50%}
+100%{background-position:100% 50%}
 }
 
-.blur2{
-    width:400px;
-    height:400px;
-    background:#00d2ff40;
-    right:-150px;
-    bottom:50px;
+/* Aurora */
+
+.aurora{
+position:absolute;
+width:100%;
+height:100%;
+filter:blur(120px);
+opacity:.6;
+background:
+linear-gradient(
+90deg,
+transparent,
+#00f5ff55,
+#8b5cf655,
+#00f5ff55,
+transparent
+);
+animation:aurora 10s linear infinite;
+}
+
+@keyframes aurora{
+from{transform:translateX(-50%)}
+to{transform:translateX(50%)}
+}
+
+/* Mouse Glow */
+
+.cursor{
+position:fixed;
+width:300px;
+height:300px;
+border-radius:50%;
+background:#00e5ff20;
+pointer-events:none;
+filter:blur(80px);
+transform:translate(-50%,-50%);
 }
 
 /* Navbar */
 
 nav{
-    width:90%;
-    margin:auto;
-    margin-top:30px;
-    padding:18px 30px;
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:1200px;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+display:flex;
+justify-content:space-between;
+align-items:center;
 
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,0.15);
+padding:18px 30px;
 
-    border-radius:24px;
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(25px);
+
+border:1px solid rgba(255,255,255,.1);
+
+border-radius:25px;
+z-index:10;
 }
 
-.logo{
-    font-size:1.5rem;
-    font-weight:800;
+nav a{
+color:white;
+text-decoration:none;
+margin:0 15px;
 }
 
-.menu{
-    display:flex;
-    gap:35px;
-}
-
-.menu a{
-    color:white;
-    text-decoration:none;
-    opacity:.85;
-}
-
-.cta{
-    padding:12px 22px;
-    border:none;
-    border-radius:16px;
-    background:white;
-    color:#0f4f63;
-    font-weight:700;
-    cursor:pointer;
-}
-
-/* Floating Notification */
-
-.notification{
-    width:420px;
-    max-width:90%;
-    margin:40px auto;
-
-    display:flex;
-    align-items:center;
-    gap:18px;
-
-    padding:18px 22px;
-
-    background:rgba(0,0,0,.25);
-    backdrop-filter:blur(20px);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:30px;
-}
-
-.moon{
-    width:55px;
-    height:55px;
-    background:#08111c;
-    border-radius:50%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:24px;
-}
-
-.notification h4{
-    font-size:1.3rem;
-}
-
-.notification p{
-    opacity:.75;
-}
-
-/* Hero Section */
+/* Hero */
 
 .hero{
-    width:90%;
-    margin:auto;
-    margin-top:30px;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+z-index:5;
+position:relative;
 }
 
-.hero-card{
-    position:relative;
+h1{
+font-size:8vw;
+font-weight:900;
+line-height:.9;
+letter-spacing:-5px;
+background:linear-gradient(
+90deg,
+#fff,
+#a5f3fc,
+#ffffff
+);
 
-    min-height:700px;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 
-    background:
-    linear-gradient(
-    rgba(0,0,0,.25),
-    rgba(0,0,0,.25)),
-    url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=80');
-
-    background-size:cover;
-    background-position:center;
-
-    border-radius:40px;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.15);
-
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.25);
+animation:shine 4s infinite linear;
+background-size:300% auto;
 }
 
-/* Hero Content */
-
-.hero-content{
-    position:absolute;
-    top:90px;
-    left:60px;
+@keyframes shine{
+to{
+background-position:300% center;
+}
 }
 
-.hero-content h1{
-    font-size:7rem;
-    line-height:.9;
-    font-weight:900;
-    text-transform:uppercase;
+p{
+margin-top:20px;
+font-size:1.2rem;
+opacity:.8;
 }
 
-.hero-content p{
-    margin-top:25px;
-    max-width:400px;
-    font-size:1.1rem;
-    opacity:.9;
+/* Glass Card */
+
+.card{
+margin-top:50px;
+
+width:420px;
+max-width:90%;
+
+padding:30px;
+
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(30px);
+
+border:1px solid rgba(255,255,255,.1);
+
+border-radius:30px;
+
+transition:.2s;
+transform-style:preserve-3d;
 }
 
-/* Glass Cards */
-
-.glass-card{
-    background:rgba(255,255,255,.12);
-    backdrop-filter:blur(30px);
-
-    border:1px solid rgba(255,255,255,.15);
-
-    border-radius:28px;
+.card:hover{
+box-shadow:
+0 0 80px rgba(0,229,255,.3);
 }
 
-.side-card{
-    position:absolute;
-    top:90px;
-    right:50px;
+/* Button */
 
-    width:300px;
-    padding:25px;
+button{
+margin-top:25px;
+
+padding:15px 30px;
+
+border:none;
+
+border-radius:20px;
+
+font-weight:700;
+
+cursor:pointer;
+
+background:white;
+color:#0f172a;
 }
 
-.side-card h3{
-    margin-bottom:10px;
+/* Floating Particles */
+
+.particle{
+position:absolute;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:.5;
+animation:float linear infinite;
 }
 
-.side-card p{
-    opacity:.8;
-    line-height:1.6;
+@keyframes float{
+from{
+transform:translateY(100vh);
 }
-
-/* Floating Model Card */
-
-.model-card{
-    position:absolute;
-    bottom:40px;
-    left:50px;
-
-    width:260px;
-
-    overflow:hidden;
+to{
+transform:translateY(-100px);
 }
-
-.model-card img{
-    width:100%;
-    height:260px;
-    object-fit:cover;
 }
-
-.model-info{
-    padding:20px;
-}
-
-.model-info h4{
-    margin-bottom:8px;
-}
-
-.model-info p{
-    opacity:.8;
-    font-size:.9rem;
-}
-
-/* Mini Card */
-
-.mini-card{
-    position:absolute;
-    bottom:40px;
-    right:50px;
-
-    width:250px;
-    overflow:hidden;
-}
-
-.mini-card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
-
-.mini-content{
-    padding:18px;
-}
-
-/* Buttons */
-
-.hero-buttons{
-    margin-top:35px;
-    display:flex;
-    gap:15px;
-}
-
-.btn-primary{
-    padding:15px 28px;
-    border:none;
-    border-radius:18px;
-    background:white;
-    color:#14566b;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.btn-secondary{
-    padding:15px 28px;
-    border-radius:18px;
-    background:rgba(255,255,255,.1);
-    border:1px solid rgba(255,255,255,.2);
-    color:white;
-    cursor:pointer;
-}
-
-/* Responsive */
-
-@media(max-width:991px){
-
-.hero-content h1{
-    font-size:4rem;
-}
-
-.side-card{
-    position:relative;
-    top:auto;
-    right:auto;
-    margin:30px;
-}
-
-.model-card,
-.mini-card{
-    position:relative;
-    left:auto;
-    right:auto;
-    bottom:auto;
-    margin:30px;
-}
-
-.hero-card{
-    padding-bottom:40px;
-}
-
-}
-
 </style>
 </head>
-
 <body>
 
-<div class="blur blur1"></div>
-<div class="blur blur2"></div>
+<div class="bg"></div>
+<div class="aurora"></div>
+<div class="cursor"></div>
 
 <nav>
-    <div class="logo">LUXORA</div>
-
-    <div class="menu">
-        <a href="#">Home</a>
-        <a href="#">Work</a>
-        <a href="#">Awards</a>
-        <a href="#">About</a>
-    </div>
-
-    <button class="cta">Get Started</button>
-</nav>
-
-<div class="notification">
-    <div class="moon">☾</div>
-
-    <div>
-        <h4>Ready to wind down?</h4>
-        <p>Sleep mode will start in 10 minutes.</p>
-    </div>
+<div>FUTURE</div>
+<div>
+<a href="#">Work</a>
+<a href="#">About</a>
+<a href="#">Contact</a>
 </div>
+</nav>
 
 <section class="hero">
 
-    <div class="hero-card">
+<h1>FASHION<br>WEEK</h1>
 
-        <div class="hero-content">
-            <h1>FASHION<br>WEEK</h1>
+<p>
+Luxury glassmorphism meets futuristic motion design.
+</p>
 
-            <p>
-                Experience the future of luxury design,
-                editorial storytelling and premium digital experiences.
-            </p>
+<div class="card" id="card">
+<h2>The Future of Design</h2>
+<p style="margin-top:15px">
+Interactive. Animated. Premium.
+</p>
 
-            <div class="hero-buttons">
-                <button class="btn-primary">Explore</button>
-                <button class="btn-secondary">Learn More</button>
-            </div>
-        </div>
-
-        <div class="glass-card side-card">
-            <h3>Everything</h3>
-            <p>
-                Modern luxury website crafted with
-                immersive visuals, glassmorphism UI,
-                smooth animations and premium user experience.
-            </p>
-        </div>
-
-        <div class="glass-card model-card">
-            <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800" alt="">
-            <div class="model-info">
-                <h4>Featured Collection</h4>
-                <p>The biggest modeling event of the season.</p>
-            </div>
-        </div>
-
-        <div class="glass-card mini-card">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800" alt="">
-            <div class="mini-content">
-                <h4>Premium Showcase</h4>
-            </div>
-        </div>
-
-    </div>
+<button>Explore</button>
+</div>
 
 </section>
+
+<script>
+
+/* Mouse Glow */
+
+const cursor=document.querySelector(".cursor");
+
+document.addEventListener("mousemove",(e)=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+/* 3D Tilt Card */
+
+const card=document.getElementById("card");
+
+document.addEventListener("mousemove",(e)=>{
+
+const x=(window.innerWidth/2-e.clientX)/30;
+const y=(window.innerHeight/2-e.clientY)/30;
+
+card.style.transform=
+`rotateY(${-x}deg) rotateX(${y}deg)`;
+});
+
+/* Particles */
+
+for(let i=0;i<100;i++){
+
+const p=document.createElement("div");
+
+p.className="particle";
+
+p.style.left=Math.random()*100+"vw";
+
+p.style.animationDuration=
+(5+Math.random()*10)+"s";
+
+p.style.opacity=Math.random();
+
+document.body.appendChild(p);
+}
+</script>
 
 </body>
 </html>
