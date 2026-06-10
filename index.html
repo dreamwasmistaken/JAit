@@ -1,1 +1,1552 @@
+cat > /mnt/user-data/outputs/apex_academy.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Academy — Elite Tuition Centre</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: rgba(201,168,76,0.15);
+    --night: #070912;
+    --deep: #0C1020;
+    --surface: #111827;
+    --surface-2: #1A2235;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --text-primary: #F4F0E8;
+    --text-muted: rgba(244,240,232,0.55);
+    --text-dim: rgba(244,240,232,0.3);
+    --teal: #2DD4BF;
+    --blue: #60A5FA;
+    --accent-red: #F97316;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--night);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.4s ease, width 0.3s, height 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: linear-gradient(180deg, rgba(7,9,18,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(0px);
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(7,9,18,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--night);
+    padding: 0.6rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    padding: 0 4rem;
+  }
+
+  /* ANIMATED BACKGROUND GRID */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  /* ORB LIGHTS */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  .orb-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    animation-delay: 0s;
+  }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%);
+    bottom: 100px; left: 200px;
+    animation-delay: -3s;
+  }
+  .orb-3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(96,165,250,0.07) 0%, transparent 70%);
+    top: 40%; left: 50%;
+    animation-delay: -6s;
+  }
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 750px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--gold);
+    display: block;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-title .outline-text {
+    -webkit-text-stroke: 1px rgba(244,240,232,0.3);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.6s forwards;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--night);
+    padding: 0.9rem 2.2rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary:hover { transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: var(--text-muted);
+    padding: 0.9rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+  }
+  .btn-ghost:hover { color: var(--text-primary); border-color: rgba(201,168,76,0.4); }
+
+  /* HERO FLOATING CARDS */
+  .hero-cards {
+    position: absolute; right: 4rem; top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex; flex-direction: column; gap: 1rem;
+    opacity: 0;
+    animation: fadeLeft 1s ease 1s forwards;
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateY(-50%) translateX(30px); }
+    to { opacity: 1; transform: translateY(-50%) translateX(0); }
+  }
+
+  .float-card {
+    background: rgba(17,24,39,0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 1.25rem 1.5rem;
+    min-width: 240px;
+    position: relative;
+    animation: cardFloat 6s ease-in-out infinite;
+  }
+  .float-card:nth-child(2) { animation-delay: -2s; margin-left: 2rem; }
+  .float-card:nth-child(3) { animation-delay: -4s; }
+  @keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .float-card-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+  .float-card-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .float-card-value span { color: var(--gold); }
+  .float-card-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+  .float-card-bar {
+    margin-top: 0.75rem;
+    height: 3px;
+    background: var(--glass-border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .float-card-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: barGrow 2s ease 1.5s both;
+  }
+  @keyframes barGrow {
+    from { width: 0%; }
+  }
+
+  .float-card-subjects {
+    display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap;
+  }
+  .subject-tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .subject-tag.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-dim);
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.4s forwards;
+    z-index: 2;
+  }
+  .scroll-hint-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
+    animation: scrollDrop 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollDrop {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* STATS BAND */
+  .stats-band {
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 1rem 2rem;
+    border-right: 1px solid var(--glass-border);
+    display: flex; flex-direction: column; gap: 0.25rem;
+  }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 7rem 4rem;
+    position: relative;
+  }
+
+  .section-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-eyebrow::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .section-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 520px;
+  }
+
+  /* SUBJECTS SECTION */
+  .subjects-section { background: var(--deep); }
+  .subjects-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--glass-border);
+    border: 1px solid var(--glass-border);
+  }
+  .subject-card {
+    background: var(--deep);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .subject-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .subject-card:hover { background: var(--surface); }
+  .subject-card:hover::before { transform: scaleX(1); }
+  .subject-card-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .subject-card:hover .subject-card-icon {
+    border-color: var(--gold);
+    background: var(--gold-dim);
+  }
+  .subject-card-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+  .subject-card-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .subject-card-levels {
+    display: flex; gap: 0.5rem;
+  }
+  .level-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--glass-border);
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  /* METHODOLOGY */
+  .method-section { background: var(--night); }
+  .method-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    margin-top: 4rem;
+  }
+  .method-steps { display: flex; flex-direction: column; gap: 0; }
+  .method-step {
+    display: flex; gap: 2rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .method-step::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s ease;
+  }
+  .method-step.active::before, .method-step:hover::before { transform: scaleY(1); }
+  .method-step:first-child { border-top: 1px solid var(--glass-border); }
+  .method-step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-weight: 700;
+    min-width: 24px;
+    padding-top: 2px;
+  }
+  .method-step-content {}
+  .method-step-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text-primary);
+  }
+  .method-step-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .method-visual {
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .method-visual::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -50%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .score-ring {
+    width: 180px; height: 180px;
+    margin: 0 auto 2rem;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .score-ring svg { position: absolute; inset: 0; }
+  .score-ring-text {
+    text-align: center;
+    z-index: 1;
+  }
+  .score-ring-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  .score-ring-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .method-mini-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--glass-border);
+    margin-top: 1.5rem;
+  }
+  .mini-stat {
+    background: var(--surface);
+    padding: 1rem 1.25rem;
+  }
+  .mini-stat-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .mini-stat-val span { color: var(--gold); }
+  .mini-stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* TUTORS */
+  .tutors-section { background: var(--deep); }
+  .tutors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .tutor-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    group: '';
+  }
+  .tutor-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .tutor-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    background: var(--surface-2);
+    position: relative;
+  }
+  .tutor-img-placeholder::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(7,9,18,0.9) 100%);
+  }
+  .tutor-info {
+    padding: 1.25rem 0 0;
+  }
+  .tutor-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .tutor-subject {
+    font-size: 0.8rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .tutor-uni {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.25rem;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-section { background: var(--night); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .testimonial-card {
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .testimonial-card:hover {
+    border-color: rgba(201,168,76,0.3);
+    transform: translateY(-4px);
+  }
+  .testimonial-quote {
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+  }
+  .testimonial-text {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-author {
+    display: flex; gap: 0.75rem; align-items: center;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    border: 1px solid var(--glass-border);
+  }
+  .author-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .author-detail {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  .star-row { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; }
+
+  /* PROGRAMMES */
+  .programmes-section { background: var(--deep); }
+  .programmes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--glass-border);
+    border: 1px solid var(--glass-border);
+    margin-top: 3.5rem;
+  }
+  .programme-card {
+    background: var(--deep);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    position: relative;
+  }
+  .programme-card.featured {
+    background: var(--surface);
+  }
+  .programme-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .programme-badge.gold {
+    background: var(--gold-dim);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .programme-badge.default {
+    background: var(--glass);
+    color: var(--text-muted);
+    border: 1px solid var(--glass-border);
+  }
+  .programme-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .programme-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 1.25rem 0;
+    line-height: 1;
+  }
+  .programme-price span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .programme-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+  }
+  .programme-features {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .programme-features li {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    display: flex; gap: 0.75rem; align-items: flex-start;
+  }
+  .programme-features li::before {
+    content: '→';
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .programme-features li.dim::before { color: var(--text-dim); }
+  .programme-features li.dim { color: var(--text-dim); }
+
+  /* CTA */
+  .cta-section {
+    background: var(--night);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  .cta-section .section-title { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    padding: 4rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .footer-col-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-links a {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+  .footer-tagline {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+  .footer-tagline span { color: var(--gold); }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* NOISE OVERLAY */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* TICKER */
+  .ticker-wrap {
+    overflow: hidden;
+    background: var(--gold);
+    padding: 0.75rem 0;
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 3rem;
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--night);
+    display: flex; align-items: center; gap: 1rem;
+    flex-shrink: 0;
+  }
+  .ticker-item::after { content: '◆'; font-size: 0.5rem; }
+
+  /* PROGRESS BARS */
+  .progress-bars { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .pb-item {}
+  .pb-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+  .pb-label { font-size: 0.8rem; color: var(--text-muted); }
+  .pb-val { font-size: 0.8rem; color: var(--gold); font-weight: 600; }
+  .pb-track { height: 2px; background: var(--glass-border); }
+  .pb-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    animation: pbGrow 1.5s ease 1.8s both;
+  }
+  @keyframes pbGrow { from { width: 0 !important; } }
+
+  @media (max-width: 1100px) {
+    nav { padding: 1.25rem 2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 2rem; }
+    .hero-cards { display: none; }
+    section { padding: 5rem 2rem; }
+    .stats-band { padding: 2rem; grid-template-columns: repeat(2,1fr); }
+    .subjects-grid { grid-template-columns: repeat(2,1fr); }
+    .method-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .tutors-grid { grid-template-columns: repeat(2,1fr); }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .programmes-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Apex<span>.</span>Academy</a>
+  <ul class="nav-links">
+    <li><a href="#subjects">Subjects</a></li>
+    <li><a href="#method">Method</a></li>
+    <li><a href="#tutors">Tutors</a></li>
+    <li><a href="#programmes">Programmes</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#programmes" class="nav-cta">Enrol Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Malaysia's Premier Tuition Centre</div>
+    <h1 class="hero-title">
+      Where bright<br>
+      minds <em>become</em><br>
+      <span class="outline-text">exceptional.</span>
+    </h1>
+    <p class="hero-sub">
+      Elite academic coaching from SPM to university entrance. Taught by graduates of Oxford, Cambridge, and UM. Results that speak for themselves.
+    </p>
+    <div class="hero-actions">
+      <a href="#programmes" class="btn-primary">Start Your Journey →</a>
+      <a href="#method" class="btn-ghost">Our Method ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-cards">
+    <div class="float-card">
+      <div class="float-card-label">Average Grade Improvement</div>
+      <div class="float-card-value"><span>+2.4</span> Grades</div>
+      <div class="float-card-sub">within 3 months of enrolment</div>
+      <div class="float-card-bar"><div class="float-card-bar-fill" style="width: 82%"></div></div>
+    </div>
+    <div class="float-card">
+      <div class="float-card-label">Current Focus Subjects</div>
+      <div class="float-card-subjects">
+        <div class="subject-tag active">Add Maths</div>
+        <div class="subject-tag active">Physics</div>
+        <div class="subject-tag">Chemistry</div>
+        <div class="subject-tag">BM</div>
+        <div class="subject-tag active">English</div>
+        <div class="subject-tag">Biology</div>
+      </div>
+    </div>
+    <div class="float-card">
+      <div class="float-card-label">Students Scored A+ SPM 2024</div>
+      <div class="float-card-value"><span>94</span>%</div>
+      <div class="float-card-sub">across all core subjects</div>
+      <div class="float-card-bar"><div class="float-card-bar-fill" style="width: 94%"></div></div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <div class="ticker-item">SPM Excellence</div>
+    <div class="ticker-item">IGCSE Preparation</div>
+    <div class="ticker-item">A-Level Coaching</div>
+    <div class="ticker-item">University Entrance</div>
+    <div class="ticker-item">Add Maths Specialist</div>
+    <div class="ticker-item">Physics Mastery</div>
+    <div class="ticker-item">English Fluency</div>
+    <div class="ticker-item">Online & In-Person</div>
+    <div class="ticker-item">SPM Excellence</div>
+    <div class="ticker-item">IGCSE Preparation</div>
+    <div class="ticker-item">A-Level Coaching</div>
+    <div class="ticker-item">University Entrance</div>
+    <div class="ticker-item">Add Maths Specialist</div>
+    <div class="ticker-item">Physics Mastery</div>
+    <div class="ticker-item">English Fluency</div>
+    <div class="ticker-item">Online & In-Person</div>
+  </div>
+</div>
+
+<!-- STATS BAND -->
+<div class="stats-band reveal">
+  <div class="stat-item">
+    <div class="stat-num">1<span>,</span>800<span>+</span></div>
+    <div class="stat-label">Students Enrolled</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">94<span>%</span></div>
+    <div class="stat-label">A & A+ Rate — SPM 2024</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">12<span>+</span></div>
+    <div class="stat-label">Years of Excellence</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">40<span>+</span></div>
+    <div class="stat-label">Expert Tutors</div>
+  </div>
+</div>
+
+<!-- SUBJECTS -->
+<section class="subjects-section" id="subjects">
+  <div class="subjects-header reveal">
+    <div>
+      <div class="section-eyebrow">What We Teach</div>
+      <h2 class="section-title">Every subject,<br><em>mastered.</em></h2>
+    </div>
+    <p class="section-body">
+      From core SPM subjects to IGCSE and A-Levels — our curriculum is designed around examination excellence and deep conceptual understanding.
+    </p>
+  </div>
+  <div class="subjects-grid reveal">
+    <div class="subject-card">
+      <div class="subject-card-icon">∑</div>
+      <div class="subject-card-name">Additional Mathematics</div>
+      <div class="subject-card-desc">Calculus, trigonometry, algebra, and statistics taught with rigour. Our top subject with 97% A-rate.</div>
+      <div class="subject-card-levels">
+        <div class="level-badge">Form 4</div>
+        <div class="level-badge">Form 5</div>
+        <div class="level-badge">IGCSE</div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-card-icon">⚛</div>
+      <div class="subject-card-name">Physics</div>
+      <div class="subject-card-desc">From Newtonian mechanics to quantum concepts — building intuition alongside technique for exam success.</div>
+      <div class="subject-card-levels">
+        <div class="level-badge">Form 4</div>
+        <div class="level-badge">Form 5</div>
+        <div class="level-badge">A-Level</div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-card-icon">🧪</div>
+      <div class="subject-card-name">Chemistry</div>
+      <div class="subject-card-desc">Organic, inorganic, and physical chemistry demystified. Lab-to-exam methodology that sticks.</div>
+      <div class="subject-card-levels">
+        <div class="level-badge">SPM</div>
+        <div class="level-badge">IGCSE</div>
+        <div class="level-badge">A-Level</div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-card-icon">🌿</div>
+      <div class="subject-card-name">Biology</div>
+      <div class="subject-card-desc">Cellular biology through ecology — structured learning maps that make the complex memorable.</div>
+      <div class="subject-card-levels">
+        <div class="level-badge">SPM</div>
+        <div class="level-badge">IGCSE</div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-card-icon">Aa</div>
+      <div class="subject-card-name">English Language</div>
+      <div class="subject-card-desc">Writing, comprehension, and spoken English. Confidence building for 1119, MUET, and IELTS.</div>
+      <div class="subject-card-levels">
+        <div class="level-badge">SPM 1119</div>
+        <div class="level-badge">MUET</div>
+        <div class="level-badge">IELTS</div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-card-icon">国</div>
+      <div class="subject-card-name">Bahasa Melayu</div>
+      <div class="subject-card-desc">Komsas, karangan, and rumusan mastered through structured practice with expert BM educators.</div>
+      <div class="subject-card-levels">
+        <div class="level-badge">PMR</div>
+        <div class="level-badge">SPM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="method-section" id="method">
+  <div class="section-eyebrow reveal">Our Approach</div>
+  <h2 class="section-title reveal">The Apex <em>Method.</em></h2>
+  <div class="method-layout">
+    <div class="method-steps reveal">
+      <div class="method-step active">
+        <div class="method-step-num">01</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Diagnostic Assessment</div>
+          <div class="method-step-desc">Every student begins with a personalised diagnostic session to map their exact strengths, gaps, and learning style — no guesswork.</div>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">02</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Targeted Lesson Plans</div>
+          <div class="method-step-desc">A custom syllabus is built for each student, focusing effort where it drives maximum grade improvement within the available time.</div>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">03</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Active Recall Practice</div>
+          <div class="method-step-desc">We use spaced repetition and retrieval practice — the most evidence-backed techniques in learning science — to lock in knowledge.</div>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">04</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Exam Simulation & Review</div>
+          <div class="method-step-desc">Weekly past paper sessions under timed conditions, with detailed mark-scheme review so students understand exactly how marks are awarded.</div>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">05</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Parent Progress Reports</div>
+          <div class="method-step-desc">Monthly detailed reports and parent-tutor meetings keep families informed and students accountable — education as a partnership.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-visual reveal">
+      <div class="score-ring">
+        <svg viewBox="0 0 180 180">
+          <circle cx="90" cy="90" r="75" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8"/>
+          <circle cx="90" cy="90" r="75" fill="none" stroke="var(--gold)" stroke-width="2"
+            stroke-dasharray="471" stroke-dashoffset="28"
+            stroke-linecap="round"
+            style="transform: rotate(-90deg); transform-origin: 90px 90px; animation: ringGrow 2s ease 1s both;"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-ring-num">94%</div>
+          <div class="score-ring-label">A Grade Rate</div>
+        </div>
+      </div>
+      <div class="method-mini-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val">3.2×</div>
+          <div class="mini-stat-label">Faster improvement vs self-study</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val"><span>+</span>2.4</div>
+          <div class="mini-stat-label">Avg grade lift in 3 months</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">100%</div>
+          <div class="mini-stat-label">Students recommend us</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">8:1</div>
+          <div class="mini-stat-label">Student to tutor ratio</div>
+        </div>
+      </div>
+      <div class="progress-bars">
+        <div class="pb-item">
+          <div class="pb-header"><span class="pb-label">Add Maths</span><span class="pb-val">97%</span></div>
+          <div class="pb-track"><div class="pb-fill" style="width:97%"></div></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-header"><span class="pb-label">Physics</span><span class="pb-val">93%</span></div>
+          <div class="pb-track"><div class="pb-fill" style="width:93%"></div></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-header"><span class="pb-label">Chemistry</span><span class="pb-val">91%</span></div>
+          <div class="pb-track"><div class="pb-fill" style="width:91%"></div></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-header"><span class="pb-label">English 1119</span><span class="pb-val">96%</span></div>
+          <div class="pb-track"><div class="pb-fill" style="width:96%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TUTORS -->
+<section class="tutors-section" id="tutors">
+  <div class="section-eyebrow reveal">The People Behind Your Results</div>
+  <h2 class="section-title reveal">Meet your <em>tutors.</em></h2>
+  <div class="tutors-grid reveal">
+    <div class="tutor-card">
+      <div class="tutor-img">
+        <div class="tutor-img-placeholder" style="background: linear-gradient(135deg, #1A2235 0%, #0C1020 100%);">👩‍🔬</div>
+      </div>
+      <div class="tutor-info">
+        <div class="tutor-name">Dr. Siti Rahimah</div>
+        <div class="tutor-subject">Chemistry & Biology</div>
+        <div class="tutor-uni">PhD, Universiti Malaya</div>
+      </div>
+    </div>
+    <div class="tutor-card">
+      <div class="tutor-img">
+        <div class="tutor-img-placeholder" style="background: linear-gradient(135deg, #1C1A2E 0%, #0C0A1C 100%);">👨‍💻</div>
+      </div>
+      <div class="tutor-info">
+        <div class="tutor-name">Aaron Lim</div>
+        <div class="tutor-subject">Additional Mathematics</div>
+        <div class="tutor-uni">BSc (Hons), University of Cambridge</div>
+      </div>
+    </div>
+    <div class="tutor-card">
+      <div class="tutor-img">
+        <div class="tutor-img-placeholder" style="background: linear-gradient(135deg, #1A2235 0%, #0A1520 100%);">👩‍🏫</div>
+      </div>
+      <div class="tutor-info">
+        <div class="tutor-name">Priya Nair</div>
+        <div class="tutor-subject">English & MUET</div>
+        <div class="tutor-uni">MA English Literature, Oxford</div>
+      </div>
+    </div>
+    <div class="tutor-card">
+      <div class="tutor-img">
+        <div class="tutor-img-placeholder" style="background: linear-gradient(135deg, #1A2018 0%, #0C1208 100%);">👨‍🔬</div>
+      </div>
+      <div class="tutor-info">
+        <div class="tutor-name">Muhammad Haziq</div>
+        <div class="tutor-subject">Physics & Add Maths</div>
+        <div class="tutor-uni">BEng, Imperial College London</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-eyebrow reveal">Student Stories</div>
+  <h2 class="section-title reveal">Results that<br><em>prove it.</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="star-row">★★★★★</div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">I went from a C in Add Maths to an A+ in just two terms. Aaron's approach makes you actually understand the concepts rather than just memorising formulas.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">JS</div>
+        <div>
+          <div class="author-name">Jia Ying</div>
+          <div class="author-detail">Form 5, SPM 2024 — 9A+</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="star-row">★★★★★</div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">MUET Band 6. Never thought I'd get there. Priya's classes gave me the confidence and technique I was missing. The speaking sessions were genuinely transformative.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">RH</div>
+        <div>
+          <div class="author-name">Reza Hafizuddin</div>
+          <div class="author-detail">Pre-U, UiTM 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="star-row">★★★★★</div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">As a parent, the monthly reports gave me full visibility. I knew exactly where my daughter stood and what needed work. Apex treats it as a real partnership.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PM</div>
+        <div>
+          <div class="author-name">Puan Malini</div>
+          <div class="author-detail">Parent of Divya, Form 4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMMES -->
+<section class="programmes-section" id="programmes">
+  <div class="section-eyebrow reveal">Invest in Excellence</div>
+  <h2 class="section-title reveal">Choose your<br><em>programme.</em></h2>
+  <div class="programmes-grid reveal">
+    <div class="programme-card">
+      <div class="programme-badge default">Foundation</div>
+      <div class="programme-name">Core</div>
+      <p class="programme-desc">Solid grounding in one subject. Perfect for students needing targeted improvement.</p>
+      <div class="programme-price">RM 280 <span>/ month</span></div>
+      <ul class="programme-features">
+        <li>4 sessions per month (2hrs each)</li>
+        <li>One subject of choice</li>
+        <li>Monthly assessment report</li>
+        <li>Past paper practice bank</li>
+        <li class="dim">Priority scheduling</li>
+        <li class="dim">1-on-1 tutor access</li>
+      </ul>
+      <a href="#contact" class="btn-ghost" style="display:inline-flex; font-size:0.8rem;">Get Started →</a>
+    </div>
+    <div class="programme-card featured">
+      <div class="programme-badge gold">Most Popular</div>
+      <div class="programme-name">Scholar</div>
+      <p class="programme-desc">Full-spectrum support across three subjects. Ideal for SPM and IGCSE students aiming for top results.</p>
+      <div class="programme-price" style="color: var(--gold);">RM 680 <span>/ month</span></div>
+      <ul class="programme-features">
+        <li>12 sessions per month</li>
+        <li>Three subjects included</li>
+        <li>Bi-weekly progress reports</li>
+        <li>Unlimited past paper access</li>
+        <li>Priority scheduling</li>
+        <li>WhatsApp tutor access</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:inline-flex; font-size:0.8rem;">Enrol Now →</a>
+    </div>
+    <div class="programme-card">
+      <div class="programme-badge default">Elite</div>
+      <div class="programme-name">Apex</div>
+      <p class="programme-desc">Total academic coaching. Unlimited subjects, 1-on-1 sessions, and a dedicated academic advisor.</p>
+      <div class="programme-price">RM 1,400 <span>/ month</span></div>
+      <ul class="programme-features">
+        <li>Unlimited sessions</li>
+        <li>All subjects covered</li>
+        <li>Weekly parent consultations</li>
+        <li>Dedicated academic advisor</li>
+        <li>University application support</li>
+        <li>Exam day preparation plans</li>
+      </ul>
+      <a href="#contact" class="btn-ghost" style="display:inline-flex; font-size:0.8rem;">Get Started →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="section-eyebrow reveal" style="justify-content:center; text-align:center;">Begin Today</div>
+  <h2 class="section-title reveal">
+    Your A+ is<br><em>waiting for you.</em>
+  </h2>
+  <p class="section-body reveal" style="max-width:500px; margin:0 auto; text-align:center;">
+    Limited seats available each intake. Book a free 30-minute trial class and see the Apex difference for yourself.
+  </p>
+  <div class="cta-actions reveal">
+    <a href="tel:+60312345678" class="btn-primary">Book Free Trial Class →</a>
+    <a href="https://wa.me/60312345678" class="btn-ghost">WhatsApp Us</a>
+  </div>
+  <p style="margin-top:2rem; font-size:0.8rem; color:var(--text-dim); text-align:center;">
+    📍 Petaling Jaya, Selangor &nbsp;|&nbsp; 📞 +603 1234 5678 &nbsp;|&nbsp; ✉ hello@apexacademy.edu.my
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Apex<span>.</span>Academy</div>
+      <p class="footer-desc">Malaysia's leading tuition centre for SPM, IGCSE, and A-Level students. Shaping the nation's future academic leaders since 2012.</p>
+      <div style="font-size:0.8rem; color:var(--text-dim);">© 2025 Apex Academy Sdn. Bhd. All rights reserved.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Subjects</div>
+      <ul class="footer-links">
+        <li><a href="#">Additional Mathematics</a></li>
+        <li><a href="#">Physics</a></li>
+        <li><a href="#">Chemistry</a></li>
+        <li><a href="#">Biology</a></li>
+        <li><a href="#">English & MUET</a></li>
+        <li><a href="#">Bahasa Melayu</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Programmes</div>
+      <ul class="footer-links">
+        <li><a href="#">SPM Track</a></li>
+        <li><a href="#">IGCSE Track</a></li>
+        <li><a href="#">A-Level Track</a></li>
+        <li><a href="#">STPM Support</a></li>
+        <li><a href="#">Online Classes</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">About</div>
+      <ul class="footer-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Our Tutors</a></li>
+        <li><a href="#">Results 2024</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">Petaling Jaya, Selangor, Malaysia</div>
+    <div class="footer-tagline">Empowering students to reach their <span>apex</span>.</div>
+  </div>
+</footer>
+
+<style>
+@keyframes ringGrow {
+  from { stroke-dashoffset: 471; }
+  to { stroke-dashoffset: 28; }
+}
+</style>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform += ' scale(1.8)';
+      ring.style.width = '50px';
+      ring.style.height = '50px';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Counter animation for stats
+  function animateCounter(el, target, suffix) {
+    let start = 0;
+    const dur = 2000;
+    const step = ts => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const val = Math.round(eased * target);
+      el.querySelector('.stat-num').innerHTML = val.toLocaleString() + '<span>' + suffix + '</span>';
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const items = e.target.querySelectorAll('.stat-item');
+        setTimeout(() => animateCounter(items[0], 1800, '+'), 0);
+        setTimeout(() => animateCounter(items[1], 94, '%'), 200);
+        setTimeout(() => animateCounter(items[2], 12, '+'), 400);
+        setTimeout(() => animateCounter(items[3], 40, '+'), 600);
+        statsObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  statsObserver.observe(document.querySelector('.stats-band'));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Method step active state
+  const steps = document.querySelectorAll('.method-step');
+  steps.forEach(step => {
+    step.addEventListener('click', () => {
+      steps.forEach(s => s.classList.remove('active'));
+      step.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done"
